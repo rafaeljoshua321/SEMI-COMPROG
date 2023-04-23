@@ -1,55 +1,64 @@
-//* RAFAEL JOSHUA ALFAFARA, RACHEL PALACAT //*
+//* RAFAEL JOSHUA R. ALFAFARA, RACHEL PALACAT //*
 //* BSIT - 1B //*
-//* 4 - 24 - 23 //*
+//* 4 - 24 -23 //*
 
 import java.util.Scanner;
 
-public class Candidates {
-    public static void main(String[] args) {
-        Scanner sc = new Scanner(System.in);
+public class Candidata {
+ public static Scanner scan = new Scanner (System.in);
+	public static void main(String[] args) {
+		
+		String[] candidates = new String[5];
+		int[] votes= new int[5];
+		
+		getUser(candidates, votes); 
+      getResult(candidates, votes); 
+      getTotal(candidates, votes); 
 
-        
-        String[] candidates = new String[5];
-        int[] votes = new int[5];
-
-       
-        for (int i = 0; i < 5; i++) {
-            System.out.print("Enter last name of candidate #" + (i+1) + ": ");
-            candidates[i] = sc.nextLine();
-            System.out.print("Enter votes received by " + candidates[i] + ": ");
-            votes[i] = Integer.parseInt(sc.nextLine());
+	}
+   
+	public static void getUser(String[] candidates , int[] votes) {
+		for (int i = 0; i < 5; i++) {
+            System.out.print("Enter the last name of the candidate " + (i+1) + ": ");
+            candidates[i] = scan.next();
+            System.out.print("Enter the votes received by the candidate " + (i+1) + ": ");
+            votes[i] = scan.nextInt();
         }
+		
+	}
+   
+	public static void getResult(String[] candidates , int[] votes) {
+		int totalVotes= 0; 
+	
+		for(int i=0; i<5; i++) {
+			totalVotes += votes[i]; 
+		}
+		  
+		   for(int i= 0; i<5;i++) {
+			float percentage = (float)votes[i]/ totalVotes *100;
+			System.out.printf(" %s recieved | %d | Total votes revieved: (%.2f%%)\n", candidates[i], votes[i],percentage);
+		}
+	}
+   
+	public static void getTotal (String[] candidates , int[] votes){
+		 int totalVotes = 0;
+	    int winnerIndex = 0;
+	    int minVotesIndex = 0;
 
-       
-        int totalVotes = 0;
-        for (int vote : votes) {
-            totalVotes += vote;
-        }
+	    for (int i = 0; i < 5; i++) {
+	        totalVotes += votes[i];
+	        if (votes[i] > votes[winnerIndex]) {
+	            winnerIndex = i;
+	        }
+	        if (votes[i] < votes[minVotesIndex]) {
+	            minVotesIndex = i;
+	        }
+	    }
+       //Display the total, winner, lowest votes.
+	    System.out.printf("Total votes: %d\n", totalVotes);
+	    System.out.printf("The winner of the election is: %s\n", candidates[winnerIndex]);
+	    System.out.printf("The candidate with the lowest number of votes is: %s\n", candidates[minVotesIndex]);
+	}
+	
 
-        
-        double[] percentages = new double[5];
-        for (int i = 0; i < 5; i++) {
-            percentages[i] = ((double)votes[i] / totalVotes) * 100;
-        }
-
-        // Find the winner
-        int winnerIndex = 0;
-        int maxVotes = votes[0];
-        for (int i = 1; i < 5; i++) {
-            if (votes[i] > maxVotes) {
-                maxVotes = votes[i];
-                winnerIndex = i;
-            }
-        }
-        String winnerName = candidates[winnerIndex];
-
-        // Output the results
-        System.out.println("\nElection Results:");
-        System.out.println("-----------------------------");
-        for (int i = 0; i < 5; i++) {
-            System.out.printf("Candidate: %s | Votes: %d | Percentage: %.2f%%\n", candidates[i], votes[i], percentages[i]);
-        }
-        System.out.println("-----------------------------");
-        System.out.println("Winner: " + winnerName);
-    }
 }
