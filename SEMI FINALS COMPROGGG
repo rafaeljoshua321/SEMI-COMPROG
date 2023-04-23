@@ -1,0 +1,55 @@
+//* RAFAEL JOSHUA ALFAFARA, RACHEL PALACAT //*
+//* BSIT - 1B //*
+//* 4 - 24 - 23 //*
+
+import java.util.Scanner;
+
+public class Candidates {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+
+        
+        String[] candidates = new String[5];
+        int[] votes = new int[5];
+
+       
+        for (int i = 0; i < 5; i++) {
+            System.out.print("Enter last name of candidate #" + (i+1) + ": ");
+            candidates[i] = sc.nextLine();
+            System.out.print("Enter votes received by " + candidates[i] + ": ");
+            votes[i] = Integer.parseInt(sc.nextLine());
+        }
+
+       
+        int totalVotes = 0;
+        for (int vote : votes) {
+            totalVotes += vote;
+        }
+
+        
+        double[] percentages = new double[5];
+        for (int i = 0; i < 5; i++) {
+            percentages[i] = ((double)votes[i] / totalVotes) * 100;
+        }
+
+        // Find the winner
+        int winnerIndex = 0;
+        int maxVotes = votes[0];
+        for (int i = 1; i < 5; i++) {
+            if (votes[i] > maxVotes) {
+                maxVotes = votes[i];
+                winnerIndex = i;
+            }
+        }
+        String winnerName = candidates[winnerIndex];
+
+        // Output the results
+        System.out.println("\nElection Results:");
+        System.out.println("-----------------------------");
+        for (int i = 0; i < 5; i++) {
+            System.out.printf("Candidate: %s | Votes: %d | Percentage: %.2f%%\n", candidates[i], votes[i], percentages[i]);
+        }
+        System.out.println("-----------------------------");
+        System.out.println("Winner: " + winnerName);
+    }
+}
